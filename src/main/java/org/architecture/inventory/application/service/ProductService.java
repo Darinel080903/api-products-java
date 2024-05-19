@@ -36,6 +36,26 @@ public class ProductService implements UseCaseProduct {
     }
 
     @Override
+    public List<ProductDomain> update(List<ProductDomain> productDomains) {
+        List<ProductDomain> updatedProducts = new ArrayList<>();
+        for (ProductDomain productDomain : productDomains) {
+            var ogProduct = productRepository.getById(productDomain.getUuid());
+            if (ogProduct == null) {
+                throw new RuntimeException("Product not found");
+            }
+            ogProduct.setStock(productDomain.getStock()-ogProduct.getStock());
+            var productUpdate = productRepository.update(ogProduct, ogProduct.getUuid());
+            updatedProducts.add(productUpdate);
+        }
+        return updatedProducts;
+    }
+
+    @Override
+    public ProductDomain getById(String uuid) {
+        return productRepository.getById(uuid);
+    }
+
+    @Override
     public void deleteById(String uuid) {
         productRepository.deleteById(uuid);
     }

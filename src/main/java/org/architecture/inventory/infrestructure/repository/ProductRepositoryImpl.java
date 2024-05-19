@@ -38,6 +38,19 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    public ProductDomain update(ProductDomain productDomain, String uuid) {
+        var ProductToUpdate = productJpaRepository.findById(uuid).orElseThrow();
+        ProductToUpdate.setStock(productDomain.getStock());
+        var productUpdated = productJpaRepository.save(ProductToUpdate);
+        return ProductMapper.toDomain(productUpdated);
+    }
+
+    @Override
+    public ProductDomain getById(String uuid) {
+        return null;
+    }
+
+    @Override
     public void deleteById(String uuid) {
         productJpaRepository.deleteById(uuid);
     }

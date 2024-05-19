@@ -1,10 +1,15 @@
 package org.architecture.inventory.infrestructure.mappers;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.architecture.inventory.domain.models.ProductDomain;
 import org.architecture.inventory.infrestructure.entity.ProductsEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
+@Getter @Setter
 public class ProductMapper {
     public ProductDomain toDomain (ProductsEntity productsEntity) {
         return new ProductDomain(productsEntity.getName(), productsEntity.getPrice(), productsEntity.getStock());
